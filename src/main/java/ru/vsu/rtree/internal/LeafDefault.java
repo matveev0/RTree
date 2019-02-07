@@ -13,7 +13,6 @@ import rx.functions.Func1;
 
 import java.util.List;
 
-
 public class  LeafDefault<T, S extends Geometry> implements Leaf<T, S> {
     private final List<Entry<T, S>> entries;
     private final Rectangle mbr;
@@ -39,8 +38,7 @@ public class  LeafDefault<T, S extends Geometry> implements Leaf<T, S> {
     @Override
     public void searchWithoutBackpressure(Func1<? super Geometry, Boolean> condition,
                                           Subscriber<? super Entry<T, S>> subscriber) {
-        throw new RuntimeException();
-        //LeafHelper.search(condition, subscriber, this);
+        LeafHelper.search(condition, subscriber, this);
     }
 
     @Override
@@ -50,17 +48,13 @@ public class  LeafDefault<T, S extends Geometry> implements Leaf<T, S> {
 
     @Override
     public List<Node<T, S>> add(Entry<? extends T, ? extends S> entry) {
-        throw new RuntimeException();
-
-//        return LeafHelper.add(entry, this);
+        return LeafHelper.add(entry, this);
     }
 
     // TODO: 23.12.2018
     @Override
     public NodeAndEntries<T, S> delete(Entry<? extends T, ? extends S> entry, boolean all) {
-        throw new RuntimeException();
-
-//        return LeafHelper.delete(entry, all, this);
+        return LeafHelper.delete(entry, all, this);
     }
 
     @Override
@@ -72,5 +66,4 @@ public class  LeafDefault<T, S extends Geometry> implements Leaf<T, S> {
     public Entry<T, S> entry(int i) {
         return entries.get(i);
     }
-
 }

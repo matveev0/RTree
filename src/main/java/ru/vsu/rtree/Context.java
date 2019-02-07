@@ -5,6 +5,7 @@ import ru.vsu.rtree.geometry.utils.Preconditions;
 
 /**
  * Configures an RTree prior to instantiation of an {@link RTree}.
+ *
  * @param <T> value type
  * @param <S> geometry type
  */
@@ -19,16 +20,13 @@ public final class Context<T, S extends Geometry> {
     /**
      * Constructor.
      *
-     * @param minChildren
-     *            minimum number of children per node (at least 1)
-     * @param maxChildren
-     *            max number of children per node (minimum is 3)
-     * @param selector
-     *            algorithm to select search path
-     * @param splitter
-     *            algorithm to split the children across two new nodes
-     * @param factory
-     *            node creation factory
+     * @param minChildren minimum number of children per node (at least 1)
+     * @param maxChildren max number of children per node (minimum is 3)
+     *                    //    * @param selector
+     *                    //     *            algorithm to select search path
+     *                    //     * @param splitter
+     *                    //     *            algorithm to split the children across two new nodes
+     * @param factory     node creation factory
      */
     public Context(int minChildren, int maxChildren, Selector selector, Splitter splitter,
                    Factory<T, S> factory) {

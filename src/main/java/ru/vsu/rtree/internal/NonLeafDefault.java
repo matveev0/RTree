@@ -34,8 +34,8 @@ public final class NonLeafDefault<T, S extends Geometry> implements NonLeaf<T, S
     @Override
     public void searchWithoutBackpressure(Func1<? super Geometry, Boolean> criterion,
                                           Subscriber<? super Entry<T, S>> subscriber) {
-        throw new RuntimeException();
-        //NonLeafHelper.search(criterion, subscriber, this);
+       // throw new RuntimeException();
+        NonLeafHelper.search(criterion, subscriber, this);
     }
 
     @Override
@@ -46,16 +46,16 @@ public final class NonLeafDefault<T, S extends Geometry> implements NonLeaf<T, S
     // TODO: 23.12.2018
     @Override
     public List<Node<T, S>> add(Entry<? extends T, ? extends S> entry) {
-        throw new RuntimeException();
+        //throw new RuntimeException();
 
-        //return NonLeafHelper.add(entry, this);
+        return NonLeafHelper.add(entry, this);
     }
 
     // TODO: 23.12.2018
     @Override
     public NodeAndEntries<T, S> delete(Entry<? extends T, ? extends S> entry, boolean all) {
-        throw new RuntimeException();
-        //return NonLeafHelper.delete(entry, all, this);
+        //throw new RuntimeException();
+        return NonLeafHelper.delete(entry, all, this);
     }
 
     @Override

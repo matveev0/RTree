@@ -18,5 +18,4 @@ public interface Leaf<T, S extends Geometry> extends Node<T, S> {
      * @return ith entry
      */
     Entry<T, S> entry(int i);
-
 }

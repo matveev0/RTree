@@ -41,5 +41,4 @@ public final class ListPair<T extends HasGeometry> {
     public double marginSum() {
         return marginSum;
     }
-
 }
