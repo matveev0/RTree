@@ -12,21 +12,19 @@ public final class Lists {
         // cannot instantiate
     }
 
+    @SafeVarargs
     public static <E> ArrayList<E> newArrayList(E... elements) {
         Preconditions.checkNotNull(elements);
         // Avoid integer overflow when a large array is passed in
         int capacity = computeArrayListCapacity(elements.length);
-        ArrayList<E> list = new ArrayList<E>(capacity);
+        ArrayList<E> list = new ArrayList<>(capacity);
         Collections.addAll(list, elements);
         return list;
     }
 
-    @VisibleForTesting
-    static int computeArrayListCapacity(int arraySize) {
+    private static int computeArrayListCapacity(int arraySize) {
         Preconditions.checkArgument(arraySize >= 0, "arraySize must be non-negative");
-
-        // TODO(kevinb): Figure out the right behavior, and document it
-        return saturatedCast(5L + arraySize + (arraySize / 10));
+        return saturatedCast(arraySize);
     }
 
     /**
@@ -38,8 +36,7 @@ public final class Lists {
      *         {@code int} type, {@link Integer#MAX_VALUE} if it is too large,
      *         or {@link Integer#MIN_VALUE} if it is too small
      */
-    @VisibleForTesting
-    static int saturatedCast(long value) {
+    private static int saturatedCast(long value) {
         if (value > Integer.MAX_VALUE) {
             return Integer.MAX_VALUE;
         }

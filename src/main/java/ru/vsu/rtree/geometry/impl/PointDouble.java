@@ -1,5 +1,6 @@
 package ru.vsu.rtree.geometry.impl;
 
+import ru.vsu.rtree.geometry.Geometries;
 import ru.vsu.rtree.geometry.Geometry;
 import ru.vsu.rtree.geometry.Point;
 import ru.vsu.rtree.geometry.Rectangle;
@@ -84,14 +85,10 @@ public final class PointDouble implements Point {
         return this;
     }
 
-    // TODO: 23.12.2018
     @Override
     public Rectangle add(Rectangle r) {
-        throw new RuntimeException();
-       /* return Geometries.rectangle(Math.min(x, r.x1()), Math.min(y, r.y1()), Math.max(x, r.x2()),
+        return Geometries.rectangle(Math.min(x, r.x1()), Math.min(y, r.y1()), Math.max(x, r.x2()),
                 Math.max(y, r.y2()));
-    */
-
     }
 
     @Override
@@ -134,8 +131,6 @@ public final class PointDouble implements Point {
         PointDouble other = (PointDouble) obj;
         if (Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x))
             return false;
-        if (Double.doubleToLongBits(y) != Double.doubleToLongBits(other.y))
-            return false;
-        return true;
+        return Double.doubleToLongBits(y) == Double.doubleToLongBits(other.y);
     }
 }

@@ -18,7 +18,7 @@ public class  LeafDefault<T, S extends Geometry> implements Leaf<T, S> {
     private final Rectangle mbr;
     private final Context<T, S> context;
 
-    public LeafDefault(List<Entry<T, S>> entries, Context<T, S> context) {
+     LeafDefault(List<Entry<T, S>> entries, Context<T, S> context) {
         this.entries = entries;
         this.context = context;
         this.mbr = Util.mbr(entries);
@@ -34,7 +34,6 @@ public class  LeafDefault<T, S extends Geometry> implements Leaf<T, S> {
         return entries;
     }
 
-    // TODO: 23.12.2018
     @Override
     public void searchWithoutBackpressure(Func1<? super Geometry, Boolean> condition,
                                           Subscriber<? super Entry<T, S>> subscriber) {
