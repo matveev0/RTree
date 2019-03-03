@@ -77,8 +77,8 @@ public class OnSubscribeSearch<T, S extends Geometry> implements Observable.OnSu
                     requestAll();
                 }
                 // TODO: 08.02.2019
-                /* else
-                    requestSome(n);*/
+                 else
+                    requestSome(n);
             } catch (RuntimeException e) {
                 subscriber.onError(e);
             }
@@ -97,8 +97,6 @@ public class OnSubscribeSearch<T, S extends Geometry> implements Observable.OnSu
 
             // rxjava used AtomicLongFieldUpdater instead of AtomicLong
             // but benchmarks showed no benefit here so reverted to AtomicLong
-
-       /*
 
             long previousCount = getAndAddRequest(requested, n);
             if (previousCount == 0) {
@@ -124,7 +122,7 @@ public class OnSubscribeSearch<T, S extends Geometry> implements Observable.OnSu
                     }
                 }
 
-            }*/
+            }
         }
     }
 }
