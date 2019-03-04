@@ -61,7 +61,6 @@ public final class Geometries {
         return LineFloat.create(x1, y1, x2, y2);
     }
 
-    @VisibleForTesting
     static double normalizeLongitude(double d) {
         return normalizeLongitude((float) d);
     }

@@ -100,9 +100,9 @@ public class SplitterRStar implements Splitter {
             if (list == null)
                 list = new ArrayList<T>(items);
             Collections.sort(list, comparator(sortType));
-            List<ListPair<T>> p  =  getPairs(minSize, list);
+            List<ListPair<T>> p = getPairs(minSize, list);
             float marginSum = marginValueSum(p);
-            if(marginSum < lowerMarginSum){
+            if (marginSum < lowerMarginSum) {
                 lowerMarginSum = marginSum;
                 pairs = p;
                 // because p uses subViews of list we need to create a new one
@@ -113,14 +113,14 @@ public class SplitterRStar implements Splitter {
         return Collections.min(pairs, comparator);
     }
 
-    static <T extends HasGeometry> List<ListPair<T>> getPairs(int minSize, List<T> list){
-        List<ListPair<T>> pairs = new ArrayList<>(list.size() - 2*minSize +1);
-        for(int i = minSize; i<list.size() - minSize +1;i++){
+    static <T extends HasGeometry> List<ListPair<T>> getPairs(int minSize, List<T> list) {
+        List<ListPair<T>> pairs = new ArrayList<>(list.size() - 2 * minSize + 1);
+        for (int i = minSize; i < list.size() - minSize + 1; i++) {
             // Note that subList returns a view of list so creating list1 and
             // list2 doesn't
             // necessarily incur array allocation costs.
-            List<T> list1 = list.subList(0,i);
-            List<T> list2 = list.subList(i,list.size());
+            List<T> list1 = list.subList(0, i);
+            List<T> list2 = list.subList(i, list.size());
             ListPair<T> pair = new ListPair<T>(list1, list2);
             pairs.add(pair);
         }

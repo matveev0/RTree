@@ -3,7 +3,6 @@ package ru.vsu.rtree.geometry.impl;
 import ru.vsu.rtree.geometry.*;
 import ru.vsu.rtree.geometry.utils.Objects;
 import ru.vsu.rtree.geometry.utils.Optional;
-import ru.vsu.rtree.internal.util.GeometryUtil;
 import ru.vsu.rtree.internal.util.ObjectsHelper;
 
 import java.awt.geom.Line2D;
@@ -71,8 +70,6 @@ public final class LineFloat implements Line {
     @Override
     public boolean intersects(Rectangle r) {
         throw new RuntimeException();
-//        return RectangleUtil.rectangleIntersectsLine(r.x1(), r.y1(), r.x2() - r.x1(),
-//                r.y2() - r.y1(), x1, y1, x2, y2);
     }
 
     @Override
@@ -111,7 +108,6 @@ public final class LineFloat implements Line {
     @Override
     public boolean intersects(Circle circle) {
       throw new RuntimeException();
-        //  return GeometryUtil.lineIntersects(x1, y1, x2, y2, circle);
     }
 
     @Override

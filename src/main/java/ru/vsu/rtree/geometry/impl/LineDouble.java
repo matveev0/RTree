@@ -1,10 +1,10 @@
 package ru.vsu.rtree.geometry.impl;
 
 import java.awt.geom.Line2D;
+
 import ru.vsu.rtree.geometry.*;
 import ru.vsu.rtree.geometry.utils.Objects;
 import ru.vsu.rtree.geometry.utils.Optional;
-import ru.vsu.rtree.internal.util.GeometryUtil;
 import ru.vsu.rtree.internal.util.ObjectsHelper;
 
 public final class LineDouble implements Line {
@@ -60,10 +60,9 @@ public final class LineDouble implements Line {
     @Override
     public boolean intersects(Circle circle) {
         throw new RuntimeException();
-        //return GeometryUtil.lineIntersects(x1, y1, x2, y2, circle);;
     }
 
-    // TODO: 23.12.2018 написать метод
+    // TODO: 23.12.2018 write
     @Override
     public boolean intersects(Rectangle r) {
         throw new RuntimeException();

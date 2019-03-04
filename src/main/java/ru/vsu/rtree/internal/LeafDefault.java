@@ -18,7 +18,7 @@ public class  LeafDefault<T, S extends Geometry> implements Leaf<T, S> {
     private final Rectangle mbr;
     private final Context<T, S> context;
 
-     LeafDefault(List<Entry<T, S>> entries, Context<T, S> context) {
+     public LeafDefault(List<Entry<T, S>> entries, Context<T, S> context) {
         this.entries = entries;
         this.context = context;
         this.mbr = Util.mbr(entries);
