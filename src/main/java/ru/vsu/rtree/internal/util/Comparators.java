@@ -9,6 +9,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class Comparators {
+
     private Comparators() {
         // prevent instantiation
     }
@@ -31,10 +32,6 @@ public class Comparators {
         };
     }
 
-    private static double area(final Rectangle r, HasGeometry g1) {
-        return g1.geometry().mbr().add(r).area();
-    }
-
     public static <T extends HasGeometry> Comparator<HasGeometry> areaIncreaseThenAreaComparator(
             final Rectangle r) {
         return new Comparator<HasGeometry>() {
@@ -49,7 +46,36 @@ public class Comparators {
         };
     }
 
-    private static float overlapArea(Rectangle r, List<? extends HasGeometry> list, HasGeometry g) {
+    /**
+     * <p>
+     * Returns a comparator that can be used to sort entries returned by search
+     * methods. For example:
+     * </p>
+     * <p>
+     * <code>search(100).toSortedList(ascendingDistance(r))</code>
+     * </p>
+     *
+     * @param <T> the value type
+     * @param <S> the entry type
+     * @param r   rectangle to measure distance to
+     * @return a comparator to sort by ascending distance from the rectangle
+     */
+    public static <T, S extends Geometry> Comparator<Entry<T, S>> ascendingDistance(final Rectangle r) {
+        return new Comparator<Entry<T, S>>() {
+            @Override
+            public int compare(Entry<T, S> e1, Entry<T, S> e2) {
+                return Double.compare(e1.geometry().distance(r), e2.geometry().distance(r));
+            }
+        };
+    }
+
+    private static double area(final Rectangle r, HasGeometry g1) {
+        return g1.geometry().mbr().add(r).area();
+    }
+
+    private static float overlapArea(Rectangle r,
+                                     List<? extends HasGeometry> list,
+                                     HasGeometry g) {
         Rectangle gPlusR = g.geometry().mbr().add(r);
         float m = 0;
         for (HasGeometry other : list) {
@@ -63,32 +89,5 @@ public class Comparators {
     private static double areaIncrease(Rectangle r, HasGeometry g) {
         Rectangle gPlusR = g.geometry().mbr().add(r);
         return gPlusR.area() - g.geometry().mbr().area();
-    }
-
-    /**
-     * <p>
-     * Returns a comparator that can be used to sort entries returned by search
-     * methods. For example:
-     * </p>
-     * <p>
-     * <code>search(100).toSortedList(ascendingDistance(r))</code>
-     * </p>
-     *
-     * @param <T>
-     *            the value type
-     * @param <S>
-     *            the entry type
-     * @param r
-     *            rectangle to measure distance to
-     * @return a comparator to sort by ascending distance from the rectangle
-     */
-    public static <T, S extends Geometry> Comparator<Entry<T, S>> ascendingDistance(
-            final Rectangle r) {
-        return new Comparator<Entry<T, S>>() {
-            @Override
-            public int compare(Entry<T, S> e1, Entry<T, S> e2) {
-                return Double.compare(e1.geometry().distance(r), e2.geometry().distance(r));
-            }
-        };
     }
 }

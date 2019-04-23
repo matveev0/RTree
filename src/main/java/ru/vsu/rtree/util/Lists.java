@@ -1,7 +1,6 @@
 package ru.vsu.rtree.util;
 
 import ru.vsu.rtree.geometry.utils.Preconditions;
-import ru.vsu.rtree.geometry.utils.annotations.VisibleForTesting;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,11 +29,10 @@ public final class Lists {
     /**
      * Returns the {@code int} nearest in value to {@code value}.
      *
-     * @param value
-     *            any {@code long} value
-     * @return the same value cast to {@code int} if it is in the range of the
-     *         {@code int} type, {@link Integer#MAX_VALUE} if it is too large,
-     *         or {@link Integer#MIN_VALUE} if it is too small
+     * @param value any {@code long} value
+     * @return the same value cast to {@code int} if it is in the range of the {@code int} type,
+     * {@link Integer#MAX_VALUE} if it is too large, or
+     * {@link Integer#MIN_VALUE} if it is too small
      */
     private static int saturatedCast(long value) {
         if (value > Integer.MAX_VALUE) {

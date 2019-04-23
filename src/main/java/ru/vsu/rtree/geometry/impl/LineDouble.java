@@ -1,11 +1,13 @@
 package ru.vsu.rtree.geometry.impl;
 
-import java.awt.geom.Line2D;
-
 import ru.vsu.rtree.geometry.*;
 import ru.vsu.rtree.geometry.utils.Objects;
 import ru.vsu.rtree.geometry.utils.Optional;
+import ru.vsu.rtree.internal.util.GeometryUtil;
 import ru.vsu.rtree.internal.util.ObjectsHelper;
+import ru.vsu.rtree.internal.util.RectangleUtil;
+
+import java.awt.geom.Line2D;
 
 public final class LineDouble implements Line {
     private final double x1;
@@ -45,6 +47,7 @@ public final class LineDouble implements Line {
     }
 
     @Override
+    @SuppressWarnings("Duplicates")
     public boolean intersects(Line b) {
         Line2D line1 = new Line2D.Double(x1, y1, x2, y2);
         Line2D line2 = new Line2D.Double(b.x1(), b.y1(), b.x2(), b.y2());
@@ -56,16 +59,17 @@ public final class LineDouble implements Line {
         return intersects(point.mbr());
     }
 
-    // TODO: 23.12.2018 write
     @Override
     public boolean intersects(Circle circle) {
-        throw new RuntimeException();
+        return GeometryUtil.lineIntersects(x1, y1, x2, y2, circle);
     }
 
-    // TODO: 23.12.2018 write
     @Override
     public boolean intersects(Rectangle r) {
-        throw new RuntimeException();
+        return RectangleUtil.rectangleIntersectsLine(r.x1(), r.y1(),
+                r.x2() - r.x1(),
+                r.y2() - r.y1(),
+                x1, y1, x2, y2);
     }
 
     @Override
@@ -118,8 +122,10 @@ public final class LineDouble implements Line {
     public boolean equals(Object obj) {
         Optional<LineDouble> other = ObjectsHelper.asClass(obj, LineDouble.class);
         if (other.isPresent()) {
-            return Objects.equal(x1, other.get().x1) && Objects.equal(x2, other.get().x2)
-                    && Objects.equal(y1, other.get().y1) && Objects.equal(y2, other.get().y2);
+            return Objects.equal(x1, other.get().x1)
+                    && Objects.equal(x2, other.get().x2)
+                    && Objects.equal(y1, other.get().y1)
+                    && Objects.equal(y2, other.get().y2);
         } else
             return false;
     }

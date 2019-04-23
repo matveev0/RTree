@@ -24,5 +24,4 @@ public final class Preconditions {
         if (!b)
             throw new IllegalArgumentException();
     }
-
 }

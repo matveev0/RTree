@@ -8,7 +8,7 @@ import java.util.List;
 public final class FactoryDefault<T, S extends Geometry> implements Factory<T, S> {
 
     private static class Holder {
-        private static final Factory<Object, Geometry> INSTANCE = new FactoryDefault<Object, Geometry>();
+        private static final Factory<Object, Geometry> INSTANCE = new FactoryDefault<>();
     }
 
     @SuppressWarnings("unchecked")

@@ -108,16 +108,7 @@ public final class PointDouble implements Point {
 
     @Override
     public int hashCode() {
-//        final int prime = 31;
-//        int result = 1;
-//        long temp;
-//        temp = Double.doubleToLongBits(x);
-//        result = prime * result + (int) (temp ^ (temp >>> 32));
-//        temp = Double.doubleToLongBits(y);
-//        result = prime * result + (int) (temp ^ (temp >>> 32));
-//        return result;
         return Objects.hashCode(x,y);
-
     }
 
     @Override

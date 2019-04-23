@@ -3,9 +3,9 @@ package ru.vsu.rtree.internal;
 import ru.vsu.rtree.Entry;
 import ru.vsu.rtree.geometry.Geometry;
 import ru.vsu.rtree.geometry.utils.Objects;
-import ru.vsu.rtree.internal.util.ObjectsHelper;
 import ru.vsu.rtree.geometry.utils.Optional;
 import ru.vsu.rtree.geometry.utils.Preconditions;
+import ru.vsu.rtree.internal.util.ObjectsHelper;
 
 /**
  * An entry in the R-tree which has a spatial representation.
@@ -39,14 +39,9 @@ public final class EntryDefault<T, S extends Geometry> implements Entry<T, S> {
      * @return entry wrapping value and associated geometry
      */
     public static <T, S extends Geometry> Entry<T, S> entry(T value, S geometry) {
-        return new EntryDefault<T, S>(value, geometry);
+        return new EntryDefault<>(value, geometry);
     }
 
-    /**
-     * Returns the value wrapped by this {@link EntryDefault}.
-     *
-     * @return the entry value
-     */
     @Override
     public T value() {
         return value;
@@ -59,8 +54,7 @@ public final class EntryDefault<T, S extends Geometry> implements Entry<T, S> {
 
     @Override
     public String toString() {
-        String builder = "Entry [value=" + value + ", geometry=" + geometry + "]";
-        return builder;
+        return "Entry [value=" + value + ", geometry=" + geometry + "]";
     }
 
     @Override
@@ -69,14 +63,14 @@ public final class EntryDefault<T, S extends Geometry> implements Entry<T, S> {
     }
 
     @Override
-    /*@SuppressWarnings("rawtypes")*/
     public boolean equals(Object obj) {
         Optional<EntryDefault> other = ObjectsHelper.asClass(obj, EntryDefault.class);
         if (other.isPresent()) {
             return Objects.equal(value, other.get().value)
                     && Objects.equal(geometry, other.get().geometry);
-        } else
+        } else {
             return false;
+        }
     }
 }
 

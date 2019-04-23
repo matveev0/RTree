@@ -2,6 +2,7 @@ package ru.vsu.rtree.internal.util;
 
 import java.util.*;
 
+
 /**
  * An unbounded priority {@linkplain Queue queue} based on a priority heap. The
  * elements of the priority queue are ordered according to their
@@ -50,10 +51,9 @@ import java.util.*;
  * "{@docRoot}/../technotes/guides/collections/index.html"> Java Collections
  * Framework</a>.
  *
- * @since 1.5
+ * @param <E> the type of elements held in this collection
  * @author Josh Bloch, Doug Lea
- * @param <E>
- *            the type of elements held in this collection
+ * @since 1.5
  */
 public class PriorityQueue<E> extends AbstractQueue<E> implements java.io.Serializable {
 
@@ -102,10 +102,8 @@ public class PriorityQueue<E> extends AbstractQueue<E> implements java.io.Serial
      * orders its elements according to their {@linkplain Comparable natural
      * ordering}.
      *
-     * @param initialCapacity
-     *            the initial capacity for this priority queue
-     * @throws IllegalArgumentException
-     *             if {@code initialCapacity} is less than 1
+     * @param initialCapacity the initial capacity for this priority queue
+     * @throws IllegalArgumentException if {@code initialCapacity} is less than 1
      */
     public PriorityQueue(int initialCapacity) {
         this(initialCapacity, null);
@@ -115,10 +113,9 @@ public class PriorityQueue<E> extends AbstractQueue<E> implements java.io.Serial
      * Creates a {@code PriorityQueue} with the default initial capacity and
      * whose elements are ordered according to the specified comparator.
      *
-     * @param comparator
-     *            the comparator that will be used to order this priority queue.
-     *            If {@code null}, the {@linkplain Comparable natural ordering}
-     *            of the elements will be used.
+     * @param comparator the comparator that will be used to order this priority queue.
+     *                   If {@code null}, the {@linkplain Comparable natural ordering}
+     *                   of the elements will be used.
      * @since 1.8
      */
     public PriorityQueue(Comparator<? super E> comparator) {
@@ -129,14 +126,11 @@ public class PriorityQueue<E> extends AbstractQueue<E> implements java.io.Serial
      * Creates a {@code PriorityQueue} with the specified initial capacity that
      * orders its elements according to the specified comparator.
      *
-     * @param initialCapacity
-     *            the initial capacity for this priority queue
-     * @param comparator
-     *            the comparator that will be used to order this priority queue.
-     *            If {@code null}, the {@linkplain Comparable natural ordering}
-     *            of the elements will be used.
-     * @throws IllegalArgumentException
-     *             if {@code initialCapacity} is less than 1
+     * @param initialCapacity the initial capacity for this priority queue
+     * @param comparator      the comparator that will be used to order this priority queue.
+     *                        If {@code null}, the {@linkplain Comparable natural ordering}
+     *                        of the elements will be used.
+     * @throws IllegalArgumentException if {@code initialCapacity} is less than 1
      */
     public PriorityQueue(int initialCapacity, Comparator<? super E> comparator) {
         // Note: This restriction of at least one is not actually needed,
@@ -155,14 +149,11 @@ public class PriorityQueue<E> extends AbstractQueue<E> implements java.io.Serial
      * priority queue will be ordered according to the {@linkplain Comparable
      * natural ordering} of its elements.
      *
-     * @param c
-     *            the collection whose elements are to be placed into this
-     *            priority queue
-     * @throws ClassCastException
-     *             if elements of the specified collection cannot be compared to
-     *             one another according to the priority queue's ordering
-     * @throws NullPointerException
-     *             if the specified collection or any of its elements are null
+     * @param c the collection whose elements are to be placed into this
+     *          priority queue
+     * @throws ClassCastException   if elements of the specified collection cannot be compared to
+     *                              one another according to the priority queue's ordering
+     * @throws NullPointerException if the specified collection or any of its elements are null
      */
     @SuppressWarnings("unchecked")
     public PriorityQueue(Collection<? extends E> c) {
@@ -185,15 +176,12 @@ public class PriorityQueue<E> extends AbstractQueue<E> implements java.io.Serial
      * priority queue. This priority queue will be ordered according to the same
      * ordering as the given priority queue.
      *
-     * @param c
-     *            the priority queue whose elements are to be placed into this
-     *            priority queue
-     * @throws ClassCastException
-     *             if elements of {@code c} cannot be compared to one another
-     *             according to {@code c}'s ordering
-     * @throws NullPointerException
-     *             if the specified priority queue or any of its elements are
-     *             null
+     * @param c the priority queue whose elements are to be placed into this
+     *          priority queue
+     * @throws ClassCastException   if elements of {@code c} cannot be compared to one another
+     *                              according to {@code c}'s ordering
+     * @throws NullPointerException if the specified priority queue or any of its elements are
+     *                              null
      */
     @SuppressWarnings("unchecked")
     public PriorityQueue(PriorityQueue<? extends E> c) {
@@ -206,14 +194,11 @@ public class PriorityQueue<E> extends AbstractQueue<E> implements java.io.Serial
      * sorted set. This priority queue will be ordered according to the same
      * ordering as the given sorted set.
      *
-     * @param c
-     *            the sorted set whose elements are to be placed into this
-     *            priority queue
-     * @throws ClassCastException
-     *             if elements of the specified sorted set cannot be compared to
-     *             one another according to the sorted set's ordering
-     * @throws NullPointerException
-     *             if the specified sorted set or any of its elements are null
+     * @param c the sorted set whose elements are to be placed into this
+     *          priority queue
+     * @throws ClassCastException   if elements of the specified sorted set cannot be compared to
+     *                              one another according to the sorted set's ordering
+     * @throws NullPointerException if the specified sorted set or any of its elements are null
      */
     @SuppressWarnings("unchecked")
     public PriorityQueue(SortedSet<? extends E> c) {
@@ -237,8 +222,8 @@ public class PriorityQueue<E> extends AbstractQueue<E> implements java.io.Serial
             a = Arrays.copyOf(a, a.length, Object[].class);
         int len = a.length;
         if (len == 1 || this.comparator != null)
-            for (int i = 0; i < len; i++)
-                if (a[i] == null)
+            for (Object o : a)
+                if (o == null)
                     throw new NullPointerException();
         this.queue = a;
         this.size = a.length;
@@ -247,8 +232,7 @@ public class PriorityQueue<E> extends AbstractQueue<E> implements java.io.Serial
     /**
      * Initializes queue array with elements from the given Collection.
      *
-     * @param c
-     *            the collection
+     * @param c the collection
      */
     private void initFromCollection(Collection<? extends E> c) {
         initElementsFromCollection(c);
@@ -265,8 +249,7 @@ public class PriorityQueue<E> extends AbstractQueue<E> implements java.io.Serial
     /**
      * Increases the capacity of the array.
      *
-     * @param minCapacity
-     *            the desired minimum capacity
+     * @param minCapacity the desired minimum capacity
      */
     private void grow(int minCapacity) {
         int oldCapacity = queue.length;
@@ -289,12 +272,10 @@ public class PriorityQueue<E> extends AbstractQueue<E> implements java.io.Serial
      * Inserts the specified element into this priority queue.
      *
      * @return {@code true} (as specified by {@link Collection#add})
-     * @throws ClassCastException
-     *             if the specified element cannot be compared with elements
-     *             currently in this priority queue according to the priority
-     *             queue's ordering
-     * @throws NullPointerException
-     *             if the specified element is null
+     * @throws ClassCastException   if the specified element cannot be compared with elements
+     *                              currently in this priority queue according to the priority
+     *                              queue's ordering
+     * @throws NullPointerException if the specified element is null
      */
     @Override
     public boolean add(E e) {
@@ -305,12 +286,10 @@ public class PriorityQueue<E> extends AbstractQueue<E> implements java.io.Serial
      * Inserts the specified element into this priority queue.
      *
      * @return {@code true} (as specified by {@link Queue#offer})
-     * @throws ClassCastException
-     *             if the specified element cannot be compared with elements
-     *             currently in this priority queue according to the priority
-     *             queue's ordering
-     * @throws NullPointerException
-     *             if the specified element is null
+     * @throws ClassCastException   if the specified element cannot be compared with elements
+     *                              currently in this priority queue according to the priority
+     *                              queue's ordering
+     * @throws NullPointerException if the specified element is null
      */
     @Override
     public boolean offer(E e) {
@@ -350,8 +329,7 @@ public class PriorityQueue<E> extends AbstractQueue<E> implements java.io.Serial
      * Returns {@code true} if and only if this queue contained the specified
      * element (or equivalently, if this queue changed as a result of the call).
      *
-     * @param o
-     *            element to be removed from this queue, if present
+     * @param o element to be removed from this queue, if present
      * @return {@code true} if this queue changed as a result of the call
      */
     @Override
@@ -369,8 +347,7 @@ public class PriorityQueue<E> extends AbstractQueue<E> implements java.io.Serial
      * Version of remove using reference equality, not equals. Needed by
      * iterator.remove.
      *
-     * @param o
-     *            element to be removed from this queue, if present
+     * @param o element to be removed from this queue, if present
      * @return {@code true} if removed
      */
     boolean removeEq(Object o) {
@@ -388,8 +365,7 @@ public class PriorityQueue<E> extends AbstractQueue<E> implements java.io.Serial
      * formally, returns {@code true} if and only if this queue contains at
      * least one element {@code e} such that {@code o.equals(e)}.
      *
-     * @param o
-     *            object to be checked for containment in this queue
+     * @param o object to be checked for containment in this queue
      * @return {@code true} if this queue contains the specified element
      */
     @Override
@@ -446,20 +422,17 @@ public class PriorityQueue<E> extends AbstractQueue<E> implements java.io.Serial
      *     String[] y = x.toArray(new String[0]);
      * }
      * </pre>
-     *
+     * <p>
      * Note that {@code toArray(new Object[0])} is identical in function to
      * {@code toArray()}.
      *
-     * @param a
-     *            the array into which the elements of the queue are to be
-     *            stored, if it is big enough; otherwise, a new array of the
-     *            same runtime type is allocated for this purpose.
+     * @param a the array into which the elements of the queue are to be
+     *          stored, if it is big enough; otherwise, a new array of the
+     *          same runtime type is allocated for this purpose.
      * @return an array containing all of the elements in this queue
-     * @throws ArrayStoreException
-     *             if the runtime type of the specified array is not a supertype
-     *             of the runtime type of every element in this queue
-     * @throws NullPointerException
-     *             if the specified array is null
+     * @throws ArrayStoreException  if the runtime type of the specified array is not a supertype
+     *                              of the runtime type of every element in this queue
+     * @throws NullPointerException if the specified array is null
      */
     @Override
     @SuppressWarnings("unchecked")
@@ -506,7 +479,7 @@ public class PriorityQueue<E> extends AbstractQueue<E> implements java.io.Serial
          * that require a siftup instead of a siftdown.) We must visit all of
          * the elements in this list to complete the iteration. We do this after
          * we've completed the "normal" iteration.
-         *
+         * <p>
          * We expect that most iterations, even those involving removals, will
          * not need to store elements in this field.
          */
@@ -557,7 +530,7 @@ public class PriorityQueue<E> extends AbstractQueue<E> implements java.io.Serial
                     cursor--;
                 else {
                     if (forgetMeNot == null)
-                        forgetMeNot = new ArrayDeque<E>();
+                        forgetMeNot = new ArrayDeque<>();
                     forgetMeNot.add(moved);
                 }
             } else if (lastRetElt != null) {
@@ -604,7 +577,7 @@ public class PriorityQueue<E> extends AbstractQueue<E> implements java.io.Serial
 
     /**
      * Removes the ith element from queue.
-     *
+     * <p>
      * Normally this method leaves the elements at up to i-1, inclusive,
      * untouched. Under these circumstances, it returns null. Occasionally, in
      * order to maintain the heap invariant, it must swap a later element of the
@@ -637,15 +610,13 @@ public class PriorityQueue<E> extends AbstractQueue<E> implements java.io.Serial
      * Inserts item x at position k, maintaining heap invariant by promoting x
      * up the tree until it is greater than or equal to its parent, or is the
      * root.
-     *
+     * <p>
      * To simplify and speed up coercions and comparisons. the Comparable and
      * Comparator versions are separated into different methods that are
      * otherwise identical. (Similarly for siftDown.)
      *
-     * @param k
-     *            the position to fill
-     * @param x
-     *            the item to insert
+     * @param k the position to fill
+     * @param x the item to insert
      */
     private void siftUp(int k, E x) {
         if (comparator != null)
@@ -686,10 +657,8 @@ public class PriorityQueue<E> extends AbstractQueue<E> implements java.io.Serial
      * down the tree repeatedly until it is less than or equal to its children
      * or is a leaf.
      *
-     * @param k
-     *            the position to fill
-     * @param x
-     *            the item to insert
+     * @param k the position to fill
+     * @param x the item to insert
      */
     private void siftDown(int k, E x) {
         if (comparator != null)
@@ -749,7 +718,7 @@ public class PriorityQueue<E> extends AbstractQueue<E> implements java.io.Serial
      * {@linkplain Comparable natural ordering} of its elements.
      *
      * @return the comparator used to order this queue, or {@code null} if this
-     *         queue is sorted according to the natural ordering of its elements
+     * queue is sorted according to the natural ordering of its elements
      */
     public Comparator<? super E> comparator() {
         return comparator;
@@ -758,13 +727,11 @@ public class PriorityQueue<E> extends AbstractQueue<E> implements java.io.Serial
     /**
      * Saves this queue to a stream (that is, serializes it).
      *
+     * @param s the stream
+     * @throws java.io.IOException when a problem occurs writing the object
      * @serialData The length of the array backing the instance is emitted
-     *             (int), followed by all of its elements (each an
-     *             {@code Object}) in the proper order.
-     * @param s
-     *            the stream
-     * @throws java.io.IOException
-     *             when a problem occurs writing the object
+     * (int), followed by all of its elements (each an
+     * {@code Object}) in the proper order.
      */
     private void writeObject(java.io.ObjectOutputStream s) throws java.io.IOException {
         // Write out element count, and any hidden stuff
@@ -782,14 +749,11 @@ public class PriorityQueue<E> extends AbstractQueue<E> implements java.io.Serial
      * Reconstitutes the {@code PriorityQueue} instance from a stream (that is,
      * deserializes it).
      *
-     * @param s
-     *            the stream
-     * @throws java.io.IOException
-     *             when a problem occurs reading the object
-     * @throws ClassNotFoundException
-     *             when an attempt to read the object was made but the class
-     *             corresponding to the serialized object was not on the
-     *             classpath
+     * @param s the stream
+     * @throws java.io.IOException    when a problem occurs reading the object
+     * @throws ClassNotFoundException when an attempt to read the object was made but the class
+     *                                corresponding to the serialized object was not on the
+     *                                classpath
      */
     private void readObject(java.io.ObjectInputStream s)
             throws java.io.IOException, ClassNotFoundException {
@@ -809,5 +773,4 @@ public class PriorityQueue<E> extends AbstractQueue<E> implements java.io.Serial
         // spec has never explained what that might be.
         heapify();
     }
-
 }

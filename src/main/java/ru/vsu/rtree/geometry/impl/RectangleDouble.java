@@ -2,12 +2,11 @@ package ru.vsu.rtree.geometry.impl;
 
 import ru.vsu.rtree.geometry.Geometry;
 import ru.vsu.rtree.geometry.Rectangle;
-import ru.vsu.rtree.geometry.utils.Optional;
-import ru.vsu.rtree.internal.util.GeometryUtil;
 import ru.vsu.rtree.geometry.utils.Objects;
+import ru.vsu.rtree.geometry.utils.Optional;
 import ru.vsu.rtree.geometry.utils.Preconditions;
+import ru.vsu.rtree.internal.util.GeometryUtil;
 import ru.vsu.rtree.internal.util.ObjectsHelper;
-
 
 public final class RectangleDouble implements Rectangle {
     private final double x1, y1, x2, y2;
@@ -22,7 +21,7 @@ public final class RectangleDouble implements Rectangle {
     }
 
     public static RectangleDouble create(double x1, double y1, double x2, double y2) {
-        return new RectangleDouble( x1, y1, x2, y2);
+        return new RectangleDouble(x1, y1, x2, y2);
     }
 
     @Override
@@ -57,13 +56,7 @@ public final class RectangleDouble implements Rectangle {
 
     @Override
     public boolean intersects(Rectangle r) {
-       /* if (r instanceof RectangleDouble) {
-            RectangleDouble rd = (RectangleDouble) r;
-
-            return intersects(rd);
-        } else {*/
         return GeometryUtil.intersects(x1, y1, x2, y2, r.x1(), r.y1(), r.x2(), r.y2());
-        //}
     }
 
     @Override
@@ -86,23 +79,21 @@ public final class RectangleDouble implements Rectangle {
         return (x2 - x1) * (y2 - y1);
     }
 
-
     @Override
     public double intersectionArea(Rectangle r) {
         if (!intersects(r))
             return 0;
-        else {
-            return create(GeometryUtil.max(x1, r.x1()), GeometryUtil.max(y1, r.y1()),
-                    GeometryUtil.min(x2, r.x2()), GeometryUtil.min(y2, r.y2()))
-                    .area();
-        }
+        else
+            return create(
+                    GeometryUtil.max(x1, r.x1()), GeometryUtil.max(y1, r.y1()),
+                    GeometryUtil.min(x2, r.x2()), GeometryUtil.min(y2, r.y2())).area();
     }
-
 
     @Override
     public Rectangle add(Rectangle r) {
-        return new RectangleDouble(GeometryUtil.min(x1, r.x1()), GeometryUtil.min(y1, r.y1()), GeometryUtil.max(x2, r.x2()),
-                GeometryUtil.max(y2, r.y2()));
+        return new RectangleDouble(
+                GeometryUtil.min(x1, r.x1()), GeometryUtil.min(y1, r.y1()),
+                GeometryUtil.max(x2, r.x2()), GeometryUtil.max(y2, r.y2()));
     }
 
     @Override
@@ -124,13 +115,11 @@ public final class RectangleDouble implements Rectangle {
     public boolean equals(Object obj) {
         Optional<RectangleDouble> other = ObjectsHelper.asClass(obj, RectangleDouble.class);
         if (other.isPresent()) {
-            return Objects.equal(x1, other.get().x1) && Objects.equal(x2, other.get().x2)
-                    && Objects.equal(y1, other.get().y1) && Objects.equal(y2, other.get().y2);
+            return Objects.equal(x1, other.get().x1)
+                    && Objects.equal(x2, other.get().x2)
+                    && Objects.equal(y1, other.get().y1)
+                    && Objects.equal(y2, other.get().y2);
         } else
             return false;
     }
-
-    /*private boolean intersects(RectangleDouble rd) {
-        return GeometryUtil.intersects(x1, y1, x2, y2, rd.x1, rd.y1, rd.x2, rd.y2);
-    }*/
 }

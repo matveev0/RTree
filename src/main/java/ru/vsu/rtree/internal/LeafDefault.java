@@ -6,8 +6,6 @@ import ru.vsu.rtree.Leaf;
 import ru.vsu.rtree.Node;
 import ru.vsu.rtree.geometry.Geometry;
 import ru.vsu.rtree.geometry.Rectangle;
-import ru.vsu.rtree.internal.NodeAndEntries;
-import ru.vsu.rtree.internal.Util;
 import rx.Subscriber;
 import rx.functions.Func1;
 
@@ -50,7 +48,6 @@ public class  LeafDefault<T, S extends Geometry> implements Leaf<T, S> {
         return LeafHelper.add(entry, this);
     }
 
-    // TODO: 23.12.2018
     @Override
     public NodeAndEntries<T, S> delete(Entry<? extends T, ? extends S> entry, boolean all) {
         return LeafHelper.delete(entry, all, this);

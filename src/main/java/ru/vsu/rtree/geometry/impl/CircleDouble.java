@@ -50,9 +50,6 @@ public final class CircleDouble implements Circle {
         return Math.sqrt(sqr(x - point.x()) + sqr(y - point.y())) <= radius;
     }
 
-    private double sqr(double x) {
-        return x * x;
-    }
     @Override
     public boolean intersects(Line line) {
         return line.intersects(this);
@@ -61,6 +58,10 @@ public final class CircleDouble implements Circle {
     @Override
     public boolean intersects(Rectangle r) {
         return distance(r) == 0;
+    }
+
+    private double sqr(double x) {
+        return x * x;
     }
 
     @Override
@@ -87,7 +88,8 @@ public final class CircleDouble implements Circle {
     public boolean equals(Object obj) {
         Optional<CircleDouble> other = ObjectsHelper.asClass(obj, CircleDouble.class);
         if (other.isPresent()) {
-            return Objects.equal(x, other.get().x) && Objects.equal(y, other.get().y)
+            return Objects.equal(x, other.get().x)
+                    && Objects.equal(y, other.get().y)
                     && Objects.equal(radius, other.get().radius);
         } else
             return false;

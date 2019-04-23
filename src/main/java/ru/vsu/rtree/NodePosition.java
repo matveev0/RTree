@@ -23,17 +23,15 @@ public class NodePosition<T,S extends Geometry> {
     }
 
     NodePosition<T, S> nextPosition() {
-        return new NodePosition<T, S>(node, position + 1);
+        return new NodePosition<>(node, position + 1);
     }
 
     @Override
     public String toString() {
-        String builder = "NodePosition [node=" +
+        return "NodePosition [node=" +
                 node +
                 ", position=" +
                 position +
                 "]";
-        return builder;
     }
-
 }

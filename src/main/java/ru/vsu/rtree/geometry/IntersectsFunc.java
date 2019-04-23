@@ -2,9 +2,9 @@ package ru.vsu.rtree.geometry;
 
 import rx.functions.Func2;
 
-public final class Intersects {
+public final class IntersectsFunc {
 
-    private Intersects() {
+    private IntersectsFunc() {
         // prevent instantiation
     }
 
@@ -94,6 +94,7 @@ public final class Intersects {
         }
     };
 
+    @SuppressWarnings("Duplicates")
     public static final Func2<Geometry, Line, Boolean> geometryIntersectsLine = new Func2<Geometry, Line, Boolean>() {
 
         @Override
@@ -111,6 +112,7 @@ public final class Intersects {
         }
     };
 
+    @SuppressWarnings("Duplicates")
     public static final Func2<Geometry, Circle, Boolean> geometryIntersectsCircle = new Func2<Geometry, Circle, Boolean>() {
 
         @Override
@@ -140,14 +142,11 @@ public final class Intersects {
 
         @Override
         public Boolean call(Geometry geometry, Rectangle r) {
-            if (geometry instanceof Line)
+            if (geometry instanceof Line
+                    || geometry instanceof Circle
+                    || geometry instanceof Point
+                    || geometry instanceof Rectangle)
                 return geometry.intersects(r);
-            else if (geometry instanceof Circle)
-                return geometry.intersects(r);
-            else if (geometry instanceof Point)
-                return geometry.intersects(r);
-            else if (geometry instanceof Rectangle)
-                return r.intersects((Rectangle) geometry);
             else
                 throw new RuntimeException("unrecognized geometry: " + geometry);
         }

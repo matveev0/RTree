@@ -261,9 +261,6 @@ public final class RTree<T, S extends Geometry> {
 
         @SuppressWarnings("unchecked")
         public Builder factory(Factory<?, ? extends Geometry> factory) {
-            // TODO could change the signature of Builder to have types to
-            // support this method but would be breaking change for existing
-            // clients
             this.factory = (Factory<Object, Geometry>) factory;
             return this;
         }
@@ -412,7 +409,8 @@ public final class RTree<T, S extends Geometry> {
             }
             return new RTree<>(node, size + 1, context);
         } else {
-            Leaf<T, S> node = context.factory().createLeaf(Lists.newArrayList((Entry<T, S>) entry),
+            Leaf<T, S> node = context.factory().createLeaf(
+                    Lists.newArrayList((Entry<T, S>) entry),
                     context);
             return new RTree<>(node, size + 1, context);
         }
@@ -477,7 +475,8 @@ public final class RTree<T, S extends Geometry> {
             if (nodeAndEntries.node().isPresent() && nodeAndEntries.node().get() == root.get())
                 return this;
             else
-                return new RTree<>(nodeAndEntries.node(),
+                return new RTree<>(
+                        nodeAndEntries.node(),
                         size - nodeAndEntries.countDeleted() - nodeAndEntries.entriesToAdd().size(),
                         context)
                         .add(nodeAndEntries.entriesToAdd());
@@ -596,7 +595,7 @@ public final class RTree<T, S extends Geometry> {
     }
 
     public Observable<Entry<T, S>> search(Circle circle) {
-        return search(circle, Intersects.geometryIntersectsCircle);
+        return search(circle, IntersectsFunc.geometryIntersectsCircle);
     }
 
     /**
@@ -604,12 +603,9 @@ public final class RTree<T, S extends Geometry> {
      * intersection function to filter the search results returned from a search of
      * the mbr of <code>g</code>.
      *
-     * @param <R>
-     *            type of geometry being searched for intersection with
-     * @param g
-     *            geometry being searched for intersection with
-     * @param intersects
-     *            function to determine if the two geometries intersect
+     * @param <R>        type of geometry being searched for intersection with
+     * @param g          geometry being searched for intersection with
+     * @param intersects function to determine if the two geometries intersect
      * @return a sequence of entries that intersect with g
      */
     public <R extends Geometry> Observable<Entry<T, S>> search(final R g,
@@ -660,15 +656,9 @@ public final class RTree<T, S extends Geometry> {
         };
     }
 
-
-    // TODO: 08.02.2019
-//    public Observable<Entry<T, S>> search(Circle circle) {
-//        return search(circle, Intersects.geometryIntersectsCircle);
-//    }
-//
-//    public Observable<Entry<T, S>> search(Line line) {
-//        return search(line, Intersects.geometryIntersectsLine);
-//    }
+    public Observable<Entry<T, S>> search(Line line) {
+        return search(line, IntersectsFunc.geometryIntersectsLine);
+    }
 
     /**
      * Returns an {@link Observable} sequence of all {@link Entry}s in the R-tree
@@ -710,10 +700,24 @@ public final class RTree<T, S extends Geometry> {
      * @param maxCount    max number of entries to return
      * @return nearest entries to maxCount, in ascending order of distance
      */
-    public Observable<Entry<T, S>> nearest(final Rectangle r, final double maxDistance,
+    public Observable<Entry<T, S>> nearest(final Rectangle r,
+                                           final double maxDistance,
                                            int maxCount) {
         return search(r, maxDistance)
                 .lift(new OperatorBoundedPriorityQueue<>(maxCount, Comparators.<T, S>ascendingDistance(r)));
+    }
+
+    /**
+     * Returns the nearest k entries (k=maxCount) to the given point where the
+     * entries are strictly less than a given maximum distance from the point.
+     *
+     * @param p           point
+     * @param maxDistance max distance of returned entries from the point
+     * @param maxCount    max number of entries to return
+     * @return nearest entries to maxCount, in ascending order of distance
+     */
+    public Observable<Entry<T, S>> nearest(final Point p, final double maxDistance, int maxCount) {
+        return nearest(p.mbr(), maxDistance, maxCount);
     }
 
     /**

@@ -1,4 +1,5 @@
 package ru.vsu.rtree.internal.util;
+
 import rx.Observable.Operator;
 import rx.Subscriber;
 
@@ -10,14 +11,15 @@ public final class OperatorBoundedPriorityQueue<T> implements Operator<T, T> {
     private final int maximumSize;
     private final Comparator<? super T> comparator;
 
-    public OperatorBoundedPriorityQueue(int maximumSize, Comparator<? super T> comparator) {
+    public OperatorBoundedPriorityQueue(int maximumSize,
+                                        Comparator<? super T> comparator) {
         this.maximumSize = maximumSize;
         this.comparator = comparator;
     }
 
     @Override
     public Subscriber<? super T> call(final Subscriber<? super T> child) {
-        final BoundedPriorityQueue<T> q = new BoundedPriorityQueue<T>(maximumSize, comparator);
+        final BoundedPriorityQueue<T> q = new BoundedPriorityQueue<>(maximumSize, comparator);
         return new Subscriber<T>(child) {
 
             @Override
@@ -28,7 +30,7 @@ public final class OperatorBoundedPriorityQueue<T> implements Operator<T, T> {
             @Override
             public void onCompleted() {
                 List<T> list = q.asOrderedList();
-                for (T t:list) {
+                for (T t : list) {
                     if (isUnsubscribed()) {
                         return;
                     } else {
@@ -42,14 +44,16 @@ public final class OperatorBoundedPriorityQueue<T> implements Operator<T, T> {
 
             @Override
             public void onError(Throwable t) {
-                if (!isUnsubscribed())
+                if (!isUnsubscribed()) {
                     child.onError(t);
+                }
             }
 
             @Override
             public void onNext(T t) {
-                if (!isUnsubscribed())
+                if (!isUnsubscribed()) {
                     q.add(t);
+                }
             }
         };
     }

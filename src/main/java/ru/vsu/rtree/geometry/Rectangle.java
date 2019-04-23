@@ -18,5 +18,4 @@ public interface Rectangle extends Geometry, HasGeometry {
     double intersectionArea(Rectangle r);
 
     Rectangle add(Rectangle r);
-
 }

@@ -1,7 +1,6 @@
 package ru.vsu.rtree.geometry;
 
 import ru.vsu.rtree.geometry.impl.*;
-import ru.vsu.rtree.geometry.utils.annotations.VisibleForTesting;
 
 public final class Geometries {
     public static Point point(double x, double y) {
@@ -32,7 +31,7 @@ public final class Geometries {
         return rectangleGeographic((float) lon1, (float) lat1, (float) lon2, (float) lat2);
     }
 
-   static Rectangle rectangleGeographic(float lon1, float lat1, float lon2, float lat2) {
+    static Rectangle rectangleGeographic(float lon1, float lat1, float lon2, float lat2) {
         float x1 = normalizeLongitude(lon1);
         float x2 = normalizeLongitude(lon2);
         if (x2 < x1) {

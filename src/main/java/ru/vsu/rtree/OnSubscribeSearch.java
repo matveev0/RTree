@@ -48,7 +48,6 @@ public class OnSubscribeSearch<T, S extends Geometry> implements Observable.OnSu
         }
     }
 
-    //@VisibleForTesting
     static class SearchProducer<T, S extends Geometry> implements Producer {
 
         private final Subscriber<? super Entry<T, S>> subscriber;
@@ -65,20 +64,15 @@ public class OnSubscribeSearch<T, S extends Geometry> implements Observable.OnSu
             stack = ImmutableStack.create(new NodePosition<>(node, 0));
         }
 
-
         @Override
         public void request(long n) {
             try {
-                if (n <= 0 || requested.get() == Long.MAX_VALUE)
-                    // none requested or already started with fast path
-                    return;
-                else if (n == Long.MAX_VALUE && requested.compareAndSet(0, Long.MAX_VALUE)) {
+                if (n == Long.MAX_VALUE && requested.compareAndSet(0, Long.MAX_VALUE)) {
                     // fast path
                     requestAll();
-                }
-                // TODO: 08.02.2019
-                 else
+                } else {
                     requestSome(n);
+                }
             } catch (RuntimeException e) {
                 subscriber.onError(e);
             }
@@ -86,17 +80,15 @@ public class OnSubscribeSearch<T, S extends Geometry> implements Observable.OnSu
 
         private void requestAll() {
             node.searchWithoutBackpressure(condition, subscriber);
-            if (!subscriber.isUnsubscribed())
+            if (!subscriber.isUnsubscribed()) {
                 subscriber.onCompleted();
+            }
         }
 
         private void requestSome(long n) {
             // back pressure path
             // this algorithm copied roughly from
             // rxjava-core/OnSubscribeFromIterable.java
-
-            // rxjava used AtomicLongFieldUpdater instead of AtomicLong
-            // but benchmarks showed no benefit here so reverted to AtomicLong
 
             long previousCount = getAndAddRequest(requested, n);
             if (previousCount == 0) {
@@ -117,11 +109,11 @@ public class OnSubscribeSearch<T, S extends Geometry> implements Observable.OnSu
                         return;
                     } else {
                         stack = st;
-                        if (requested.addAndGet(-r) == 0)
+                        if (requested.addAndGet(-r) == 0) {
                             return;
+                        }
                     }
                 }
-
             }
         }
     }

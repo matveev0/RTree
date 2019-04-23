@@ -20,7 +20,7 @@ public final class ImmutableStack<T> implements Iterable<T> {
     }
 
     public static <T> ImmutableStack<T> create(T t) {
-        return new ImmutableStack<T>(Optional.of(t), Optional.of(ImmutableStack.<T>empty()));
+        return new ImmutableStack<>(Optional.of(t), Optional.of(ImmutableStack.<T>empty()));
     }
 
     public ImmutableStack() {
@@ -45,18 +45,18 @@ public final class ImmutableStack<T> implements Iterable<T> {
     }
 
     public ImmutableStack<T> push(T value) {
-        return new ImmutableStack<T>(value, this);
+        return new ImmutableStack<>(value, this);
     }
 
     @Override
     public Iterator<T> iterator() {
-        return new StackIterator<T>(this);
+        return new StackIterator<>(this);
     }
 
     private static class StackIterator<U> implements Iterator<U> {
         private ImmutableStack<U> stack;
 
-        public StackIterator(final ImmutableStack<U> stack) {
+        StackIterator(final ImmutableStack<U> stack) {
             this.stack = stack;
         }
 

@@ -16,7 +16,8 @@ class Backpressure {
     static <T, S extends Geometry> ImmutableStack<NodePosition<T, S>> search(
             final Func1<? super Geometry, Boolean> condition,
             final Subscriber<? super Entry<T, S>> subscriber,
-            final ImmutableStack<NodePosition<T, S>> stack, final long request) {
+            final ImmutableStack<NodePosition<T, S>> stack,
+            final long request) {
         StackAndRequest<NodePosition<T, S>> state = StackAndRequest.create(stack, request);
         return searchAndReturnStack(condition, subscriber, state);
     }
@@ -37,7 +38,8 @@ class Backpressure {
                 state = StackAndRequest.create(searchAfterLastInNode(state.stack), state.request);
             } else if (np.node() instanceof NonLeaf) {
                 // handle non-leaf
-                state = StackAndRequest.create(searchNonLeaf(condition, state.stack, np),
+                state = StackAndRequest.create(
+                        searchNonLeaf(condition, state.stack, np),
                         state.request);
             } else {
                 // handle leaf
@@ -63,7 +65,8 @@ class Backpressure {
 
     private static <S extends Geometry, T> ImmutableStack<NodePosition<T, S>> searchNonLeaf(
             final Func1<? super Geometry, Boolean> condition,
-            ImmutableStack<NodePosition<T, S>> stack, NodePosition<T, S> np) {
+            ImmutableStack<NodePosition<T, S>> stack,
+            NodePosition<T, S> np) {
         Node<T, S> child = ((NonLeaf<T, S>) np.node()).child(np.position());
         if (condition.call(child.geometry())) {
             stack = stack.push(new NodePosition<>(child, 0));

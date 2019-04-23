@@ -11,12 +11,12 @@ import java.util.List;
 
 public class SplitterRStar implements Splitter {
     private enum SortType {
-        X_LOWER, X_UPPER, Y_LOWER, Y_UPPER;
+        X_LOWER, X_UPPER, Y_LOWER, Y_UPPER
     }
 
     private final Comparator<ListPair<?>> comparator;
 
-    public SplitterRStar() {
+    SplitterRStar() {
         this.comparator = new Comparator<ListPair<?>>() {
 
             @Override
@@ -97,8 +97,9 @@ public class SplitterRStar implements Splitter {
         float lowerMarginSum = Float.MAX_VALUE;
         List<T> list = null;
         for (SortType sortType : SortType.values()) {
-            if (list == null)
-                list = new ArrayList<T>(items);
+            if (list == null) {
+                list = new ArrayList<>(items);
+            }
             Collections.sort(list, comparator(sortType));
             List<ListPair<T>> p = getPairs(minSize, list);
             float marginSum = marginValueSum(p);
@@ -116,12 +117,9 @@ public class SplitterRStar implements Splitter {
     static <T extends HasGeometry> List<ListPair<T>> getPairs(int minSize, List<T> list) {
         List<ListPair<T>> pairs = new ArrayList<>(list.size() - 2 * minSize + 1);
         for (int i = minSize; i < list.size() - minSize + 1; i++) {
-            // Note that subList returns a view of list so creating list1 and
-            // list2 doesn't
-            // necessarily incur array allocation costs.
             List<T> list1 = list.subList(0, i);
             List<T> list2 = list.subList(i, list.size());
-            ListPair<T> pair = new ListPair<T>(list1, list2);
+            ListPair<T> pair = new ListPair<>(list1, list2);
             pairs.add(pair);
         }
         return pairs;

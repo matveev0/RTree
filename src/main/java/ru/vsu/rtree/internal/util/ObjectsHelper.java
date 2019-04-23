@@ -1,17 +1,11 @@
 package ru.vsu.rtree.internal.util;
 
 import ru.vsu.rtree.geometry.utils.Optional;
-import ru.vsu.rtree.geometry.utils.annotations.VisibleForTesting;
 
 public final class ObjectsHelper {
 
     private ObjectsHelper() {
         // prevent instantiation
-    }
-
-    @VisibleForTesting
-    static void instantiateForTestCoveragePurposesOnly() {
-        new ObjectsHelper();
     }
 
     @SuppressWarnings("unchecked")
@@ -23,5 +17,4 @@ public final class ObjectsHelper {
         else
             return Optional.of((T) object);
     }
-
 }

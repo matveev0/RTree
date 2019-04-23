@@ -51,6 +51,11 @@ public final class CircleFloat implements Circle {
     }
 
     @Override
+    public boolean intersects(Point point) {
+        return Math.sqrt(sqr(x - point.x()) + sqr(y - point.y())) <= radius;
+    }
+
+    @Override
     public boolean intersects(Rectangle r) {
         return distance(r) == 0;
     }
@@ -62,6 +67,11 @@ public final class CircleFloat implements Circle {
     }
 
     @Override
+    public boolean intersects(Line line) {
+        return line.intersects(this);
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hashCode(x, y, radius);
     }
@@ -70,24 +80,15 @@ public final class CircleFloat implements Circle {
     public boolean equals(Object obj) {
         Optional<CircleFloat> other = ObjectsHelper.asClass(obj, CircleFloat.class);
         if (other.isPresent()) {
-            return Objects.equal(x, other.get().x) && Objects.equal(y, other.get().y)
+            return Objects.equal(x, other.get().x)
+                    && Objects.equal(y, other.get().y)
                     && Objects.equal(radius, other.get().radius);
         } else
             return false;
     }
 
-    @Override
-    public boolean intersects(Point point) {
-        return Math.sqrt(sqr(x - point.x()) + sqr(y - point.y())) <= radius;
-    }
-
     private double sqr(double x) {
         return x * x;
-    }
-
-    @Override
-    public boolean intersects(Line line) {
-        return line.intersects(this);
     }
 
     @Override

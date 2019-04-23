@@ -51,16 +51,19 @@ public final class RectangleFloat implements Rectangle {
 
     @Override
     public Rectangle add(Rectangle r) {
-        if (r.isDoublePrecision()) {
-            return RectangleDouble.create(GeometryUtil.min(x1, r.x1()), GeometryUtil.min(y1, r.y1()), GeometryUtil.max(x2, r.x2()),
-                    GeometryUtil.max(y2, r.y2()));
-        } else if (r instanceof RectangleFloat) {
+        if (r.isDoublePrecision())
+            return RectangleDouble.create(
+                    GeometryUtil.min(x1, r.x1()), GeometryUtil.min(y1, r.y1()),
+                    GeometryUtil.max(x2, r.x2()), GeometryUtil.max(y2, r.y2()));
+        else if (r instanceof RectangleFloat) {
             RectangleFloat rf = (RectangleFloat) r;
-            return RectangleFloat.create(GeometryUtil.min(x1, rf.x1), GeometryUtil.min(y1, rf.y1), GeometryUtil.max(x2, rf.x2),
-                    GeometryUtil.max(y2, rf.y2));
+            return RectangleFloat.create(
+                    GeometryUtil.min(x1, rf.x1), GeometryUtil.min(y1, rf.y1),
+                    GeometryUtil.max(x2, rf.x2), GeometryUtil.max(y2, rf.y2));
         } else {
             PointFloat rf = (PointFloat) r;
-            return RectangleFloat.create(GeometryUtil.min(x1, rf.xFloat()), GeometryUtil.min(y1, rf.yFloat()),
+            return RectangleFloat.create(
+                    GeometryUtil.min(x1, rf.xFloat()), GeometryUtil.min(y1, rf.yFloat()),
                     GeometryUtil.max(x2, rf.xFloat()), GeometryUtil.max(y2, rf.yFloat()));
         }
     }
@@ -94,8 +97,10 @@ public final class RectangleFloat implements Rectangle {
     public boolean equals(Object obj) {
         Optional<RectangleFloat> other = ObjectsHelper.asClass(obj, RectangleFloat.class);
         if (other.isPresent()) {
-            return Objects.equal(x1, other.get().x1) && Objects.equal(x2, other.get().x2)
-                    && Objects.equal(y1, other.get().y1) && Objects.equal(y2, other.get().y2);
+            return Objects.equal(x1, other.get().x1)
+                    && Objects.equal(x2, other.get().x2)
+                    && Objects.equal(y1, other.get().y1)
+                    && Objects.equal(y2, other.get().y2);
         } else
             return false;
     }
@@ -130,5 +135,4 @@ public final class RectangleFloat implements Rectangle {
     public String toString() {
         return "Rectangle [x1=" + x1 + ", y1=" + y1 + ", x2=" + x2 + ", y2=" + y2 + "]";
     }
-
 }

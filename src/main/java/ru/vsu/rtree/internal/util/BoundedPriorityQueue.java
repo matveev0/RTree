@@ -7,10 +7,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-
 public final class BoundedPriorityQueue<T> {
 
-    private final PriorityQueue<T> queue; /* backing data structure */
+    /**
+     * Backing data structure.
+     */
+    private final PriorityQueue<T> queue;
     private final Comparator<? super T> comparator;
     private final int maxSize;
 
@@ -18,12 +20,10 @@ public final class BoundedPriorityQueue<T> {
      * Constructs a {@link BoundedPriorityQueue} with the specified
      * {@code maxSize} and {@code comparator}.
      *
-     * @param maxSize
-     *            - The maximum size the queue can reach, must be a positive
-     *            integer.
-     * @param comparator
-     *            - The comparator to be used to compare the elements in the
-     *            queue, must be non-null.
+     * @param maxSize    - The maximum size the queue can reach, must be a positive
+     *                   integer.
+     * @param comparator - The comparator to be used to compare the elements in the
+     *                   queue, must be non-null.
      */
     public BoundedPriorityQueue(final int maxSize, final Comparator<? super T> comparator) {
         Preconditions.checkArgument(maxSize > 0, "maxSize must be > 0");
@@ -56,8 +56,7 @@ public final class BoundedPriorityQueue<T> {
      * instead. Otherwise, the queue will not be modified and {@code e} will not
      * be added.
      *
-     * @param t
-     *            - Element to be added, must be non-null.
+     * @param t - Element to be added, must be non-null.
      */
     public void add(final T t) {
         if (t == null) {
@@ -76,15 +75,15 @@ public final class BoundedPriorityQueue<T> {
 
     /**
      * @return Returns a view of the queue as a
-     *         {@link Collections#unmodifiableList(java.util.List)}
-     *         unmodifiableList sorted in reverse order.
+     * {@link Collections#unmodifiableList(java.util.List)}
+     * unmodifiableList sorted in reverse order.
      */
     public List<T> asList() {
-        return Collections.unmodifiableList(new ArrayList<T>(queue));
+        return Collections.unmodifiableList(new ArrayList<>(queue));
     }
 
     public List<T> asOrderedList() {
-        List<T> list = new ArrayList<T>(queue);
+        List<T> list = new ArrayList<>(queue);
         Collections.sort(list, comparator);
         return list;
     }

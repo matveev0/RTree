@@ -1,6 +1,5 @@
 package ru.vsu.rtree.geometry.utils;
 
-
 public final class Optional<T> {
 
     private final T value;
@@ -12,7 +11,6 @@ public final class Optional<T> {
     }
 
     private Optional() {
-        //no-arg constructor to enable kryo (a bit yukky but not a big deal)
         this(null, false);
     }
 
@@ -24,33 +22,15 @@ public final class Optional<T> {
         if (present)
             return value;
         else
-            throw new NotPresentException();
-    }
-
-    public T or(T alternative) {
-        if (present)
-            return value;
-        else
-            return alternative;
-    }
-
-    public static <T> Optional<T> fromNullable(T t) {
-        if (t == null)
-            return Optional.absent();
-        else
-            return Optional.of(t);
+            throw new RuntimeException("Not Present!");
     }
 
     public static <T> Optional<T> of(T t) {
-        return new Optional<T>(t, true);
+        return new Optional<>(t, true);
     }
 
     public static <T> Optional<T> absent() {
-        return new Optional<T>();
-    }
-
-    public static class NotPresentException extends RuntimeException {
-
+        return new Optional<>();
     }
 
     @Override

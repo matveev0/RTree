@@ -106,24 +106,26 @@ public final class PointFloat implements Point {
 
     @Override
     public Rectangle add(Rectangle r) {
-        throw new RuntimeException();
-
-//        if (r.isDoublePrecision()) {
-//            return RectangleDouble.create(Math.min(x, r.x1()), Math.min(y, r.y1()),
-//                    Math.max(x, r.x2()), Math.max(y, r.y2()));
-//        } else if (r instanceof RectangleFloat) {
-//            RectangleFloat rf = (RectangleFloat) r;
-//            return RectangleFloat.create(Math.min(x, rf.x1), Math.min(y, rf.y1), Math.max(x, rf.x2),
-//                    Math.max(y, rf.y2));
-//        } else if (r instanceof PointFloat) {
-//            PointFloat p = (PointFloat) r;
-//            return RectangleFloat.create(Math.min(x, p.x), Math.min(y, p.y), Math.max(x, p.x),
-//                    Math.max(y, p.y));
-//        } else {
-//            PointDouble p = (PointDouble) r;
-//            return RectangleDouble.create(Math.min(x, p.x()), Math.min(y, p.y()),
-//                    Math.max(x, p.x()), Math.max(y, p.y()));
-//        }
+        if (r.isDoublePrecision()) {
+            return RectangleDouble.create(
+                    Math.min(x, r.x1()), Math.min(y, r.y1()),
+                    Math.max(x, r.x2()), Math.max(y, r.y2()));
+        } else if (r instanceof RectangleFloat) {
+            RectangleFloat rf = (RectangleFloat) r;
+            return RectangleFloat.create(
+                    Math.min(x, rf.x1), Math.min(y, rf.y1),
+                    Math.max(x, rf.x2), Math.max(y, rf.y2));
+        } else if (r instanceof PointFloat) {
+            PointFloat p = (PointFloat) r;
+            return RectangleFloat.create(
+                    Math.min(x, p.x), Math.min(y, p.y),
+                    Math.max(x, p.x), Math.max(y, p.y));
+        } else {
+            PointDouble p = (PointDouble) r;
+            return RectangleDouble.create(
+                    Math.min(x, p.x()), Math.min(y, p.y()),
+                    Math.max(x, p.x()), Math.max(y, p.y()));
+        }
     }
 
     @Override
